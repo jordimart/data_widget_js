@@ -1,0 +1,17 @@
+Cal llegir 
+
+https://help.ubuntu.com/12.10/serverguide/mysql.html
+http://stackoverflow.com/questions/5248420/at-what-point-does-mysql-innodb-fine-tuning-become-a-requirement
+
+Per saber com optimitzar el rendiment de les nostres BBDD que continguen taules monstruoses
+
+http://serverfault.com/questions/230551/mysql-innodb-innodb-file-per-table-cons/231400#231400
+http://dba.stackexchange.com/questions/1497/how-to-improve-innodb-delete-performance/1502#1502
+http://dba.stackexchange.com/questions/194/how-do-you-tune-mysql-for-a-heavy-innodb-workload/1185#1185
+http://stackoverflow.com/questions/3927690/howto-clean-a-mysql-innodb-storage-engine/4056261#4056261
+
+Instal·lar sudo apt-get install mysqltuner
+Deixar-lo enxufat i intentar estresar la BD amb consultes a taules grans
+
+Si la nostra CPU consumeix >100% cal fer-li més millores de rendiment en la configuració
+http://forums.cpanel.net/f189/very-high-mysql-cpu-usage-277811.html
