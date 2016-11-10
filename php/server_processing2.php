@@ -15,10 +15,11 @@
 	$sTable = "proxylog_proxyentry";
 
 	/* Database connection information */
-	$gaSql['user']       = "root";
-	$gaSql['password']   = "root";
-	$gaSql['db']         = "ies_network";
+	$gaSql['user']       = "jordimart";
+	$gaSql['password']   = "";
+	$gaSql['db']         = "paginator";
 	$gaSql['server']     = "127.0.0.1";
+        $gaSql['port']     = "3306";
 
 	/* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 	//include( $_SERVER['DOCUMENT_ROOT']."/datatables/mysql.php" );
@@ -42,12 +43,12 @@
 	/*
 	 * MySQL connection
 	 */
-	if ( ! $gaSql['link'] = mysql_pconnect( $gaSql['server'], $gaSql['user'], $gaSql['password']  ) )
+	if ( ! $gaSql['link'] = new mysqli( $gaSql['server'], $gaSql['user'], $gaSql['password'] ) )
 	{
 		fatal_error( 'Could not open connection to server' );
 	}
 
-	if ( ! mysql_select_db( $gaSql['db'], $gaSql['link'] ) )
+	if ( ! mysqli_select_db(  $gaSql['link'],$gaSql['db'] ) )
 	{
 		fatal_error( 'Could not select database ' );
 	}
@@ -75,7 +76,7 @@
 			if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
 			{
 				$sOrder .= "`".$aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."` ".
-				 	mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
+				 	mysqli_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
 			}
 		}
 
@@ -101,7 +102,7 @@
 		{
 			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" )
 			{
-				$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysqli_real_escape_string( $_GET['sSearch'] )."%' OR ";
 			}
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
@@ -121,7 +122,7 @@
 			{
 				$sWhere .= " AND ";
 			}
-			$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+			$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysqli_real_escape_string($_GET['sSearch_'.$i])."%' ";
 		}
 	}
 
@@ -151,14 +152,14 @@
 			file_put_contents($file, $current);
 		//}
 	}
-	$rResult = mysql_query( $sQuery, $gaSql['link'] ) or fatal_error( 'MySQL Error: ' . mysql_errno() );
+	$rResult = mysqli_query($gaSql['link'], $sQuery ) or fatal_error( 'MySQL Error: ' . mysqli_errno() );
 
 	/* Data set length after filtering */
 	$sQuery = "
 		SELECT FOUND_ROWS()
 	";
-	$rResultFilterTotal = mysql_query( $sQuery, $gaSql['link'] ) or fatal_error( 'MySQL Error: ' . mysql_errno() );
-	$aResultFilterTotal = mysql_fetch_array($rResultFilterTotal);
+	$rResultFilterTotal = mysqli_query($gaSql['link'],$sQuery ) or fatal_error( 'MySQL Error: ' . mysqli_errno() );
+	$aResultFilterTotal = mysqli_fetch_array($rResultFilterTotal);
 	$iFilteredTotal = $aResultFilterTotal[0];
 
 	/* Total data set length */
@@ -166,8 +167,8 @@
 		SELECT COUNT(`".$sIndexColumn."`)
 		FROM   $sTable
 	";
-	$rResultTotal = mysql_query( $sQuery, $gaSql['link'] ) or fatal_error( 'MySQL Error: ' . mysql_errno() );
-	$aResultTotal = mysql_fetch_array($rResultTotal);
+	$rResultTotal = mysqli_query($gaSql['link'],$sQuery ) or fatal_error( 'MySQL Error: ' . mysqli_errno() );
+	$aResultTotal = mysqli_fetch_array($rResultTotal);
 	$iTotal = $aResultTotal[0];
 
 
@@ -190,7 +191,7 @@
 			"aaData" => array()
 		);
 	}
-	while ( $aRow = mysql_fetch_array( $rResult ) )
+	while ( $aRow = mysqli_fetch_array( $rResult ) )
 	{
 		$row = array();
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
