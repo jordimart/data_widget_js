@@ -1,0 +1,27 @@
+
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px; 
+    width: 100%;
+    border-collapse: collapse; 
+}
+th, td {
+   width: 25%;
+   text-align: left;
+   vertical-align: top;
+   border-top: 4px solid #aabcfe; 
+   border-bottom: 1px solid #fff; color: #039;
+   border-collapse: collapse;
+   padding: 0.3em;
+   caption-side: bottom;
+}
+caption {
+   padding: 0.3em;
+   color: #fff;
+    background: #000;
+}
+th {
+  background: #b9c9fe;
+}
+tr:hover td { background: #d0dafd; color: #339; }
+
