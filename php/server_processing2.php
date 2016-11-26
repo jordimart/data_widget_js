@@ -7,7 +7,8 @@
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
 	$aColumns = array( 'id','event_date', 'ip_src', 'domain_destination' );
-	$DEBUG=1;
+        //$aColumns='ip_src';
+	//$DEBUG=1;
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
 
@@ -19,7 +20,7 @@
 	$gaSql['password']   = "";
 	$gaSql['db']         = "paginator";
 	$gaSql['server']     = "127.0.0.1";
-        $gaSql['port']     = "3306";
+        
 
 	/* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 	//include( $_SERVER['DOCUMENT_ROOT']."/datatables/mysql.php" );
